@@ -1,4 +1,4 @@
-[NavData, SatelliteData, PreciseEphemerisData, PreciseClockData, meta] = LoadData('D:\spoof_dataset\rnd\e309285ce89643fcaa597fb75482b089');
+[NavData, SatelliteData, PreciseEphemerisData, PreciseClockData, meta] = LoadData('');
 
 pos_E__m              = zeros(numel(SatelliteData), 3);
 rx_clock_offset__m    = zeros(numel(SatelliteData), 1);
@@ -94,51 +94,22 @@ rx_clock_offset__m    = rx_clock_offset__m(2:end);
 
 %%
 af = afigure(42);
-subplot(5,2,1);
-hold on; grid on;
+tiledlayout(3,2,"TileSpacing","tight")
+
+nexttile; hold on; grid on; title('X ECEF')
 plot(pos_E__m(:,1), 'DisplayName', 'LSQ (5 States, SPP)')
-legend('show')
 
-subplot(5,2,2);
-hold on; grid on;
-legend('show')
-
-subplot(5,2,3);
-hold on; grid on;
+nexttile; hold on; grid on;  title('Y ECEF')
 plot(pos_E__m(:,2), 'DisplayName', 'LSQ (5 States, SPP)')
-legend('show')
 
-subplot(5,2,4);
-hold on; grid on;
-legend('show')
-
-subplot(5,2,5);
-hold on; grid on;
+nexttile; hold on; grid on; title('Z ECEF')
 plot(pos_E__m(:,3), 'DisplayName', 'LSQ (5 States, SPP)')
-legend('show')
 
-subplot(5,2,6);
-hold on; grid on;
-legend('show')
-
-subplot(5,2,7);
-hold on; grid on;
-title('dt_r')
+nexttile; hold on; grid on; title('Clock offset')
 plot(rx_clock_offset__m ./ Transformation.SpeedOfLight__mDs, 'DisplayName', 'LSQ (5 States, SPP)')
-legend('show')
 
-subplot(5,2,8);
-hold on; grid on;
-legend('show')
-
-subplot(5,2,9);
-hold on; grid on;
-title('nSat')
-plot(n_sat, 'DisplayName', 'nsat (5 States, SPP)');
-
-subplot(5,2,10);
-hold on; grid on;
-title('elevations')
+nexttile; hold on; grid on; title('Number SV')
+plot(n_sat, 'DisplayName', 'nsat (4 States, SPP)');
 
 af.linkaxes('x');
 af.showlegend();
